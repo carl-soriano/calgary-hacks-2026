@@ -1,46 +1,98 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { getLevelImages, LEVELS } from '../../constants/gameImages'
 import type { GameImage } from '../../types/game'
 import '../../styles/game.css'
 
-type Result = 'correct' | 'wrong'
+const HINT_SEEN_KEY = 'ai-real-game-hint-seen'
+const VIEW_SECONDS = 5
+
 type Phase = 'playing' | 'score'
 
-export default function ImageGuessGame() {
+interface ImageGuessGameProps {
+  onBackToHome?: () => void
+}
+
+export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
   const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages())
   const [levelIndex, setLevelIndex] = useState(0)
   const [score, setScore] = useState(0)
-  const [result, setResult] = useState<Result | null>(null)
+  const [levelResults, setLevelResults] = useState<boolean[]>([])
+  const [lastLevelCorrect, setLastLevelCorrect] = useState<boolean | null>(null)
   const [phase, setPhase] = useState<Phase>('playing')
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [imageBlurred, setImageBlurred] = useState(false)
+  const [secondsLeft, setSecondsLeft] = useState(VIEW_SECONDS)
+  const [showHint, setShowHint] = useState(true)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && localStorage.getItem(HINT_SEEN_KEY)) {
+      setShowHint(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (phase !== 'playing') return
+    setImageBlurred(false)
+    setSecondsLeft(VIEW_SECONDS)
+    const interval = setInterval(() => {
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval)
+          setImageBlurred(true)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [levelIndex, phase])
+
+  const dismissHint = useCallback(() => {
+    setShowHint(false)
+    try {
+      localStorage.setItem(HINT_SEEN_KEY, '1')
+    } catch {
+      // ignore
+    }
+  }, [])
 
   const current = levelImages[levelIndex]
   const isLastLevel = levelIndex === LEVELS - 1
 
-  const guess = useCallback((userSaidAI: boolean) => {
-    if (!current) return
-    const correct = current.isAI === userSaidAI
-    setResult(correct ? 'correct' : 'wrong')
-    if (correct) setScore((s) => s + 1)
-  }, [current])
-
-  const goNext = useCallback(() => {
-    if (isLastLevel) {
-      setPhase('score')
-      return
-    }
-    setLevelIndex((i) => i + 1)
-    setResult(null)
-  }, [isLastLevel])
+  const guess = useCallback(
+    (userSaidAI: boolean) => {
+      if (!current || isTransitioning || !imageBlurred) return
+      const correct = current.isAI === userSaidAI
+      setLevelResults((r) => [...r, correct])
+      if (correct) setScore((s) => s + 1)
+      if (isLastLevel) {
+        setLastLevelCorrect(correct)
+        setPhase('score')
+      } else {
+        setIsTransitioning(true)
+        window.setTimeout(() => {
+          setLevelIndex((i) => i + 1)
+          setIsTransitioning(false)
+        }, 350)
+      }
+    },
+    [current, isLastLevel, isTransitioning, imageBlurred]
+  )
 
   const playAgain = useCallback(() => {
     setLevelImages(getLevelImages())
     setLevelIndex(0)
     setScore(0)
-    setResult(null)
+    setLevelResults([])
+    setLastLevelCorrect(null)
+    setImageBlurred(false)
+    setSecondsLeft(VIEW_SECONDS)
     setPhase('playing')
   }, [])
 
   if (phase === 'score') {
+    const results =
+      levelResults.length === LEVELS ? levelResults : [...levelResults, lastLevelCorrect ?? false]
     return (
       <div className="game game-score-screen">
         <h1 className="game-title">Your score</h1>
@@ -48,9 +100,32 @@ export default function ImageGuessGame() {
         <p className="game-score-label">
           {score === LEVELS ? 'Perfect!' : score >= LEVELS / 2 ? 'Nice job!' : 'Keep practicing!'}
         </p>
-        <button type="button" className="game-btn game-btn-next" onClick={playAgain}>
-          Play again
-        </button>
+        <h2 className="game-results-heading">What you got right and wrong</h2>
+        <ul className="game-results-list" aria-label="Results by level">
+          {levelImages.map((img, i) => (
+            <li
+              key={img.id + i}
+              className={`game-results-item ${results[i] ? 'game-results-item--correct' : 'game-results-item--wrong'}`}
+            >
+              <img src={img.src} alt="" className="game-results-thumb" />
+              <div className="game-results-info">
+                <span className="game-results-level">Level {i + 1}</span>
+                <span className="game-results-verdict">{results[i] ? 'Correct' : 'Wrong'}</span>
+                <span className="game-results-answer">{img.isAI ? 'AI-generated' : 'Real'}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="game-score-actions">
+          <button type="button" className="game-btn game-btn-next" onClick={playAgain}>
+            Play again
+          </button>
+          {onBackToHome && (
+            <button type="button" className="game-btn game-btn-home" onClick={onBackToHome}>
+              Back to home
+            </button>
+          )}
+        </div>
       </div>
     )
   }
@@ -60,35 +135,79 @@ export default function ImageGuessGame() {
   return (
     <div className="game">
       <p className="game-level">Level {levelIndex + 1} of {LEVELS}</p>
-      <h1 className="game-title">AI or Real?</h1>
-      <p className="game-instruction">Is this image AI-generated?</p>
-
-      <div className="game-image-wrap">
-        <img src={current.src} alt="Guess if AI or real" className="game-image" />
+      <div
+        className="game-progress"
+        role="progressbar"
+        aria-valuenow={levelIndex + 1}
+        aria-valuemin={1}
+        aria-valuemax={LEVELS}
+        aria-label={`Level ${levelIndex + 1} of ${LEVELS}`}
+      >
+        {Array.from({ length: LEVELS }, (_, i) => (
+          <span key={i} className={`game-progress-dot ${i <= levelIndex ? 'game-progress-dot--filled' : ''}`} />
+        ))}
       </div>
+      <h1 className="game-title">AI or Real?</h1>
+      <p className="game-instruction">
+        Look for {VIEW_SECONDS} seconds, then it blurs. Choose from memory.
+      </p>
 
-      {result === null ? (
-        <div className="game-actions">
-          <button type="button" className="game-btn game-btn-no" onClick={() => guess(false)}>
-            No
-          </button>
-          <button type="button" className="game-btn game-btn-yes" onClick={() => guess(true)}>
-            Yes
-          </button>
-        </div>
-      ) : (
-        <div className="game-result">
-          <p className={`game-result-text ${result}`}>
-            {result === 'correct' ? 'Correct!' : 'Wrong!'}
+      {showHint && levelIndex === 0 && (
+        <div className="game-hint" role="status">
+          <p className="game-hint-text">
+            You get 5 seconds to look at each image. When it blurs, choose AI or Real from what you saw.
           </p>
-          <p className="game-result-answer">
-            This image is {current.isAI ? 'AI-generated' : 'real'}.
-          </p>
-          <button type="button" className="game-btn game-btn-next" onClick={goNext}>
-            {isLastLevel ? 'See score' : 'Next level'}
+          <button type="button" className="game-hint-dismiss" onClick={dismissHint} aria-label="Dismiss hint">
+            Got it
           </button>
         </div>
       )}
+
+      <div className="game-image-wrap game-image-wrap--timer">
+        <img src={current.src} alt="" className="game-image game-image-sharp" />
+        {imageBlurred && (
+          <div
+            className="game-image-blur"
+            style={{ backgroundImage: `url(${current.src})` }}
+            aria-hidden
+          />
+        )}
+        {isTransitioning && (
+          <div className="game-transition" aria-hidden>
+            <span className="game-transition-text">Next image…</span>
+          </div>
+        )}
+      </div>
+
+      {!imageBlurred && secondsLeft > 0 ? (
+        <p className="game-timer" aria-live="polite">
+          <span className="game-timer-number">{secondsLeft}</span>
+          <span className="game-timer-label"> seconds left</span>
+        </p>
+      ) : (
+        <p className="game-reveals-left">
+          {imageBlurred ? 'Now choose:' : `Look… ${secondsLeft}s left`}
+        </p>
+      )}
+
+      <div className={`game-actions ${!imageBlurred ? 'game-actions--disabled' : ''}`}>
+        <button
+          type="button"
+          className="game-btn game-btn-real"
+          onClick={() => guess(false)}
+          disabled={isTransitioning || !imageBlurred}
+        >
+          Real
+        </button>
+        <button
+          type="button"
+          className="game-btn game-btn-ai"
+          onClick={() => guess(true)}
+          disabled={isTransitioning || !imageBlurred}
+        >
+          AI
+        </button>
+      </div>
     </div>
   )
 }

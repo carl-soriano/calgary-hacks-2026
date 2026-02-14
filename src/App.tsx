@@ -8,7 +8,7 @@ function App() {
   return (
     <main>
       {started ? (
-        <ImageGuessGame />
+        <ImageGuessGame onBackToHome={() => setStarted(false)} />
       ) : (
         <Landing onStart={() => setStarted(true)} />
       )}
