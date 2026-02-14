@@ -1,11 +1,18 @@
 import '../styles/landing.css'
+import { useState } from 'react'
+import Tutorial from './Tutorial'
 
 interface LandingProps {
   onStart: () => void,
-  onStartTutorial?: () => void,
 }
 
-export default function Landing({ onStart, onStartTutorial }: LandingProps) {
+export default function Landing({ onStart }: LandingProps) {
+  const [showTutorial, setShowTutorial] = useState(false)
+
+  if (showTutorial) {
+    return <Tutorial onClose={() => setShowTutorial(false)} />
+  }
+
   return (
     <div className="landing">
       <div className="landing-content">
@@ -25,7 +32,7 @@ export default function Landing({ onStart, onStartTutorial }: LandingProps) {
         <button
           type="button"
           className="tutorial-btn"
-          onClick={onStartTutorial}
+          onClick={() => setShowTutorial(true)}
         >
           How to Identify AI Images
         </button>

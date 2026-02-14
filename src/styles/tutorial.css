@@ -1,0 +1,21 @@
+.tutorial-nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+}
+
+.landing.tutorial .landing-content {
+  margin-bottom: 0.75rem;
+}
+
+.tutorial-nav button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+/* make secondary buttons visually distinct if needed */
+.tutorial-nav .secondary {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.08);
+}
