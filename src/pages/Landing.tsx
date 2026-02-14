@@ -1,6 +1,7 @@
 import '../styles/landing.css'
 import { useState } from 'react'
 import Tutorial from './Tutorial'
+import { PanelOne, PanelTwo, PanelThree } from './TutorialContent'
 
 interface LandingProps {
   onStart: () => void,
@@ -10,7 +11,13 @@ export default function Landing({ onStart }: LandingProps) {
   const [showTutorial, setShowTutorial] = useState(false)
 
   if (showTutorial) {
-    return <Tutorial onClose={() => setShowTutorial(false)} />
+    return (
+      <Tutorial onClose={() => setShowTutorial(false)}>
+        <PanelOne />
+        <PanelTwo />
+        <PanelThree />
+      </Tutorial>
+    )
   }
 
   return (
