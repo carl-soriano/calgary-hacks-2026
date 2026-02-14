@@ -1,32 +1,40 @@
 .game {
   max-width: 520px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
   text-align: center;
+  background-color: #fff8f0;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .game-title {
   font-size: 1.75rem;
   margin: 0 0 0.25rem;
+  color: #5d4037;
 }
 
 .game-level {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #6366f1;
+  color: #7e57c2;
   margin: 0 0 0.5rem;
 }
 
 .game-instruction {
-  color: #666;
+  color: #6d4c41;
   margin: 0 0 1.5rem;
 }
 
 .game-image-wrap {
   margin-bottom: 1.5rem;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12);
+  border: 3px solid #ffccbc;
 }
 
 .game-image {
@@ -48,33 +56,33 @@
   font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 24px;
   cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
 .game-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .game-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.98);
 }
 
 .game-btn-no {
-  background: #e5e7eb;
-  color: #374151;
+  background: #ffab91;
+  color: #bf360c;
 }
 
 .game-btn-yes {
-  background: #3b82f6;
-  color: white;
+  background: #81c784;
+  color: #1b5e20;
 }
 
 .game-btn-next {
-  background: #10b981;
-  color: white;
+  background: #64b5f6;
+  color: #fff;
   margin-top: 0.5rem;
 }
 
@@ -89,15 +97,15 @@
 }
 
 .game-result-text.correct {
-  color: #059669;
+  color: #43a047;
 }
 
 .game-result-text.wrong {
-  color: #dc2626;
+  color: #e57373;
 }
 
 .game-result-answer {
-  color: #6b7280;
+  color: #6d4c41;
   margin: 0 0 1rem;
 }
 
@@ -109,12 +117,64 @@
 .game-score-value {
   font-size: 3rem;
   font-weight: 800;
-  color: #1e293b;
+  color: #5d4037;
   margin: 0 0 0.5rem;
 }
 
 .game-score-label {
   font-size: 1.25rem;
-  color: #64748b;
+  color: #6d4c41;
   margin: 0 0 2rem;
+}
+
+/* Mobile: touch-friendly targets, fluid spacing */
+@media (max-width: 480px) {
+  .game {
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+
+  .game-title {
+    font-size: 1.5rem;
+  }
+
+  .game-instruction {
+    margin-bottom: 1.25rem;
+  }
+
+  .game-image-wrap {
+    margin-bottom: 1.25rem;
+    border-radius: 12px;
+    border-width: 2px;
+  }
+
+  .game-actions {
+    gap: 0.75rem;
+  }
+
+  .game-btn {
+    min-height: 48px;
+    min-width: 100px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .game-result-text {
+    font-size: 1.375rem;
+  }
+
+  .game-score-value {
+    font-size: 2.5rem;
+  }
+
+  .game-score-label {
+    font-size: 1.125rem;
+  }
+}
+
+/* Desktop: comfortable padding and max width */
+@media (min-width: 768px) {
+  .game {
+    padding: 1.5rem;
+  }
 }
