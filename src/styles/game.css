@@ -1,0 +1,120 @@
+.game {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 1.75rem;
+  margin: 0 0 0.25rem;
+}
+
+.game-level {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6366f1;
+  margin: 0 0 0.5rem;
+}
+
+.game-instruction {
+  color: #666;
+  margin: 0 0 1.5rem;
+}
+
+.game-image-wrap {
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.game-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.game-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.game-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.game-btn:active {
+  transform: translateY(0);
+}
+
+.game-btn-no {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.game-btn-yes {
+  background: #3b82f6;
+  color: white;
+}
+
+.game-btn-next {
+  background: #10b981;
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.game-result {
+  padding: 0.5rem 0;
+}
+
+.game-result-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.game-result-text.correct {
+  color: #059669;
+}
+
+.game-result-text.wrong {
+  color: #dc2626;
+}
+
+.game-result-answer {
+  color: #6b7280;
+  margin: 0 0 1rem;
+}
+
+/* Score screen */
+.game-score-screen {
+  padding-top: 3rem;
+}
+
+.game-score-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 0.5rem;
+}
+
+.game-score-label {
+  font-size: 1.25rem;
+  color: #64748b;
+  margin: 0 0 2rem;
+}
