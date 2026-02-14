@@ -124,7 +124,78 @@
 .game-score-label {
   font-size: 1.25rem;
   color: #6d4c41;
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
+}
+
+/* Results breakdown: which images were right/wrong */
+.game-results-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.game-results-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+}
+
+.game-results-item--correct {
+  background: rgba(129, 199, 132, 0.25);
+  border-color: #81c784;
+}
+
+.game-results-item--wrong {
+  background: rgba(229, 115, 115, 0.2);
+  border-color: #e57373;
+}
+
+.game-results-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.game-results-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.game-results-level {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #5d4037;
+}
+
+.game-results-verdict {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.game-results-item--correct .game-results-verdict {
+  color: #43a047;
+}
+
+.game-results-item--wrong .game-results-verdict {
+  color: #e57373;
+}
+
+.game-results-answer {
+  font-size: 0.8125rem;
+  color: #6d4c41;
 }
 
 /* Mobile: touch-friendly targets, fluid spacing */
@@ -169,6 +240,16 @@
 
   .game-score-label {
     font-size: 1.125rem;
+  }
+
+  .game-results-thumb {
+    width: 48px;
+    height: 48px;
+  }
+
+  .game-results-list {
+    max-height: 35vh;
+    gap: 0.5rem;
   }
 }
 

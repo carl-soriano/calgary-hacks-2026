@@ -3,14 +3,14 @@ import { getLevelImages, LEVELS } from '../../constants/gameImages'
 import type { GameImage } from '../../types/game'
 import '../../styles/game.css'
 
-type Result = 'correct' | 'wrong'
 type Phase = 'playing' | 'score'
 
 export default function ImageGuessGame() {
   const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages())
   const [levelIndex, setLevelIndex] = useState(0)
   const [score, setScore] = useState(0)
-  const [result, setResult] = useState<Result | null>(null)
+  const [levelResults, setLevelResults] = useState<boolean[]>([])
+  const [lastLevelCorrect, setLastLevelCorrect] = useState<boolean | null>(null)
   const [phase, setPhase] = useState<Phase>('playing')
 
   const current = levelImages[levelIndex]
@@ -19,28 +19,28 @@ export default function ImageGuessGame() {
   const guess = useCallback((userSaidAI: boolean) => {
     if (!current) return
     const correct = current.isAI === userSaidAI
-    setResult(correct ? 'correct' : 'wrong')
+    setLevelResults((r) => [...r, correct])
     if (correct) setScore((s) => s + 1)
-  }, [current])
-
-  const goNext = useCallback(() => {
     if (isLastLevel) {
+      setLastLevelCorrect(correct)
       setPhase('score')
-      return
+    } else {
+      setLevelIndex((i) => i + 1)
     }
-    setLevelIndex((i) => i + 1)
-    setResult(null)
-  }, [isLastLevel])
+  }, [current, isLastLevel])
 
   const playAgain = useCallback(() => {
     setLevelImages(getLevelImages())
     setLevelIndex(0)
     setScore(0)
-    setResult(null)
+    setLevelResults([])
+    setLastLevelCorrect(null)
     setPhase('playing')
   }, [])
 
   if (phase === 'score') {
+    const results =
+      levelResults.length === LEVELS ? levelResults : [...levelResults, lastLevelCorrect ?? false]
     return (
       <div className="game game-score-screen">
         <h1 className="game-title">Your score</h1>
@@ -48,6 +48,18 @@ export default function ImageGuessGame() {
         <p className="game-score-label">
           {score === LEVELS ? 'Perfect!' : score >= LEVELS / 2 ? 'Nice job!' : 'Keep practicing!'}
         </p>
+        <ul className="game-results-list" aria-label="Results by level">
+          {levelImages.map((img, i) => (
+            <li key={img.id + i} className={`game-results-item ${results[i] ? 'game-results-item--correct' : 'game-results-item--wrong'}`}>
+              <img src={img.src} alt="" className="game-results-thumb" />
+              <div className="game-results-info">
+                <span className="game-results-level">Level {i + 1}</span>
+                <span className="game-results-verdict">{results[i] ? 'Correct' : 'Wrong'}</span>
+                <span className="game-results-answer">{img.isAI ? 'AI-generated' : 'Real'}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
         <button type="button" className="game-btn game-btn-next" onClick={playAgain}>
           Play again
         </button>
@@ -67,28 +79,14 @@ export default function ImageGuessGame() {
         <img src={current.src} alt="Guess if AI or real" className="game-image" />
       </div>
 
-      {result === null ? (
-        <div className="game-actions">
-          <button type="button" className="game-btn game-btn-no" onClick={() => guess(false)}>
-            No
-          </button>
-          <button type="button" className="game-btn game-btn-yes" onClick={() => guess(true)}>
-            Yes
-          </button>
-        </div>
-      ) : (
-        <div className="game-result">
-          <p className={`game-result-text ${result}`}>
-            {result === 'correct' ? 'Correct!' : 'Wrong!'}
-          </p>
-          <p className="game-result-answer">
-            This image is {current.isAI ? 'AI-generated' : 'real'}.
-          </p>
-          <button type="button" className="game-btn game-btn-next" onClick={goNext}>
-            {isLastLevel ? 'See score' : 'Next level'}
-          </button>
-        </div>
-      )}
+      <div className="game-actions">
+        <button type="button" className="game-btn game-btn-no" onClick={() => guess(false)}>
+          No
+        </button>
+        <button type="button" className="game-btn game-btn-yes" onClick={() => guess(true)}>
+          Yes
+        </button>
+      </div>
     </div>
   )
 }
