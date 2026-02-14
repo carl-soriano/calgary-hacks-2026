@@ -1,7 +1,9 @@
 import '../styles/landing.css'
 
+export type GameMode = 'default' | 'easy'
+
 interface LandingProps {
-  onStart: () => void
+  onStart: (mode: GameMode) => void
 }
 
 const TITLE_LETTERS = ['A', 'I', ' ', 'R', 'E', 'A', 'L']
@@ -23,9 +25,15 @@ export default function Landing({ onStart }: LandingProps) {
         <p className="landing-tagline">
           Look for 5 seconds — then the image blurs. Choose AI or Real from memory. Score at the end.
         </p>
-        <button type="button" className="landing-cta" onClick={onStart}>
-          Play
-        </button>
+        <div className="landing-actions">
+          <button type="button" className="landing-cta" onClick={() => onStart('default')}>
+            Play
+          </button>
+          <button type="button" className="landing-cta landing-cta--secondary" onClick={() => onStart('easy')}>
+            Easy mode
+          </button>
+        </div>
+        <p className="landing-easy-note">Easy: no timer, no blur — image stays visible.</p>
       </div>
     </div>
   )

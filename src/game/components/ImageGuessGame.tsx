@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { getLevelImages, LEVELS } from '../../constants/gameImages'
 import type { GameImage } from '../../types/game'
+import type { GameMode } from '../../pages/Landing'
 import '../../styles/game.css'
 
 const HINT_SEEN_KEY = 'ai-real-game-hint-seen'
@@ -9,10 +10,11 @@ const VIEW_SECONDS = 5
 type Phase = 'playing' | 'score'
 
 interface ImageGuessGameProps {
+  mode?: GameMode
   onBackToHome?: () => void
 }
 
-export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
+export default function ImageGuessGame({ mode = 'default', onBackToHome }: ImageGuessGameProps) {
   const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages())
   const [levelIndex, setLevelIndex] = useState(0)
   const [score, setScore] = useState(0)
@@ -20,9 +22,11 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
   const [lastLevelCorrect, setLastLevelCorrect] = useState<boolean | null>(null)
   const [phase, setPhase] = useState<Phase>('playing')
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [imageBlurred, setImageBlurred] = useState(false)
+  const [imageBlurred, setImageBlurred] = useState(mode === 'easy')
   const [secondsLeft, setSecondsLeft] = useState(VIEW_SECONDS)
   const [showHint, setShowHint] = useState(true)
+
+  const isEasy = mode === 'easy'
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem(HINT_SEEN_KEY)) {
@@ -31,7 +35,7 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
   }, [])
 
   useEffect(() => {
-    if (phase !== 'playing') return
+    if (isEasy || phase !== 'playing') return
     setImageBlurred(false)
     setSecondsLeft(VIEW_SECONDS)
     const interval = setInterval(() => {
@@ -45,7 +49,7 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
       })
     }, 1000)
     return () => clearInterval(interval)
-  }, [levelIndex, phase])
+  }, [levelIndex, phase, isEasy])
 
   const dismissHint = useCallback(() => {
     setShowHint(false)
@@ -59,9 +63,11 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
   const current = levelImages[levelIndex]
   const isLastLevel = levelIndex === LEVELS - 1
 
+  const canGuess = isEasy || imageBlurred
+
   const guess = useCallback(
     (userSaidAI: boolean) => {
-      if (!current || isTransitioning || !imageBlurred) return
+      if (!current || isTransitioning || !canGuess) return
       const correct = current.isAI === userSaidAI
       setLevelResults((r) => [...r, correct])
       if (correct) setScore((s) => s + 1)
@@ -72,11 +78,12 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
         setIsTransitioning(true)
         window.setTimeout(() => {
           setLevelIndex((i) => i + 1)
+          if (!isEasy) setImageBlurred(false)
           setIsTransitioning(false)
-        }, 350)
+        }, isEasy ? 0 : 350)
       }
     },
-    [current, isLastLevel, isTransitioning, imageBlurred]
+    [current, isLastLevel, isTransitioning, canGuess, isEasy]
   )
 
   const playAgain = useCallback(() => {
@@ -85,10 +92,10 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
     setScore(0)
     setLevelResults([])
     setLastLevelCorrect(null)
-    setImageBlurred(false)
+    setImageBlurred(isEasy)
     setSecondsLeft(VIEW_SECONDS)
     setPhase('playing')
-  }, [])
+  }, [isEasy])
 
   if (phase === 'score') {
     const results =
@@ -149,10 +156,10 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
       </div>
       <h1 className="game-title">AI or Real?</h1>
       <p className="game-instruction">
-        Look for {VIEW_SECONDS} seconds, then it blurs. Choose from memory.
+        {isEasy ? 'Is this image AI-generated or real?' : `Look for ${VIEW_SECONDS} seconds, then it blurs. Choose from memory.`}
       </p>
 
-      {showHint && levelIndex === 0 && (
+      {!isEasy && showHint && levelIndex === 0 && (
         <div className="game-hint" role="status">
           <p className="game-hint-text">
             You get 5 seconds to look at each image. When it blurs, choose AI or Real from what you saw.
@@ -163,39 +170,39 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
         </div>
       )}
 
-      <div className="game-image-wrap game-image-wrap--timer">
-        <img src={current.src} alt="" className="game-image game-image-sharp" />
-        {imageBlurred && (
+      <div className={`game-image-wrap ${isEasy ? '' : 'game-image-wrap--timer'}`}>
+        <img src={current.src} alt="" className={`game-image ${isEasy ? '' : 'game-image-sharp'}`} />
+        {!isEasy && imageBlurred && (
           <div
             className="game-image-blur"
             style={{ backgroundImage: `url(${current.src})` }}
             aria-hidden
           />
         )}
-        {isTransitioning && (
+        {!isEasy && isTransitioning && (
           <div className="game-transition" aria-hidden>
             <span className="game-transition-text">Next image…</span>
           </div>
         )}
       </div>
 
-      {!imageBlurred && secondsLeft > 0 ? (
+      {!isEasy && !imageBlurred && secondsLeft > 0 ? (
         <p className="game-timer" aria-live="polite">
           <span className="game-timer-number">{secondsLeft}</span>
           <span className="game-timer-label"> seconds left</span>
         </p>
       ) : (
         <p className="game-reveals-left">
-          {imageBlurred ? 'Now choose:' : `Look… ${secondsLeft}s left`}
+          {canGuess ? 'Now choose:' : !isEasy ? `Look… ${secondsLeft}s left` : 'Choose:'}
         </p>
       )}
 
-      <div className={`game-actions ${!imageBlurred ? 'game-actions--disabled' : ''}`}>
+      <div className={`game-actions ${!canGuess ? 'game-actions--disabled' : ''}`}>
         <button
           type="button"
           className="game-btn game-btn-real"
           onClick={() => guess(false)}
-          disabled={isTransitioning || !imageBlurred}
+          disabled={isTransitioning || !canGuess}
         >
           Real
         </button>
@@ -203,7 +210,7 @@ export default function ImageGuessGame({ onBackToHome }: ImageGuessGameProps) {
           type="button"
           className="game-btn game-btn-ai"
           onClick={() => guess(true)}
-          disabled={isTransitioning || !imageBlurred}
+          disabled={isTransitioning || !canGuess}
         >
           AI
         </button>
