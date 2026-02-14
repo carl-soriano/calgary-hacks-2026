@@ -7,10 +7,9 @@ export type GameMode = 'default' | 'easy'
 
 interface LandingProps {
   onStart: (mode: GameMode) => void
-  onStart: () => void,
 }
 
-const TITLE_LETTERS = ['A', 'I', ' ', 'R', 'E', 'A', 'L']
+const TITLE_LETTERS = ['R', 'E', 'A', 'L', ' ', 'O', 'R', ' ', 'A', 'I', '?']
 
 export default function Landing({ onStart }: LandingProps) {
   const [showTutorial, setShowTutorial] = useState(false)
@@ -56,10 +55,10 @@ export default function Landing({ onStart }: LandingProps) {
       <div className="landing-info">
         <button
           type="button"
-          className="tutorial-btn"
+          className="landing-cta landing-cta--tertiary"
           onClick={() => setShowTutorial(true)}
         >
-          How to Identify AI Images
+          Tutorial: How to Identify AI Images
         </button>
       </div>
     </div>
