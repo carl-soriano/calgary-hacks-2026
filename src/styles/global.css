@@ -1,3 +1,69 @@
+/* Theme: light (default) and dark */
+:root,
+[data-theme="light"] {
+  --bg-page: #fff8f0;
+  --text-primary: #5d4037;
+  --text-secondary: #6d4c41;
+  --text-muted: #8d6e63;
+  --accent: #7e57c2;
+  --letter-bg: #ffccbc;
+  --letter-border: #ffab91;
+  --letter-text: #bf360c;
+  --btn-primary-bg: #ff8a65;
+  --btn-primary-hover: #ff7043;
+  --btn-secondary-border: #ffab91;
+  --btn-secondary-text: #bf360c;
+  --btn-secondary-hover: rgba(255, 171, 145, 0.2);
+  --card-border: #ffccbc;
+  --card-shadow: rgba(93, 64, 55, 0.12);
+  --progress-empty: #e0e0e0;
+  --hint-bg: rgba(126, 87, 194, 0.12);
+  --hint-border: rgba(126, 87, 194, 0.35);
+  --btn-real-bg: #ffab91;
+  --btn-real-text: #bf360c;
+  --btn-ai-bg: #81c784;
+  --btn-ai-text: #1b5e20;
+  --btn-next-bg: #64b5f6;
+  --btn-home-bg: #e0e0e0;
+  --correct: #43a047;
+  --wrong: #e57373;
+  --transition-overlay: rgba(255, 248, 240, 0.85);
+  --results-correct-bg: rgba(129, 199, 132, 0.25);
+  --results-wrong-bg: rgba(229, 115, 115, 0.2);
+}
+
+[data-theme="dark"] {
+  --bg-page: #1c1917;
+  --text-primary: #f5ebe0;
+  --text-secondary: #d4c4b5;
+  --text-muted: #a8998c;
+  --accent: #b39ddb;
+  --letter-bg: #5c4033;
+  --letter-border: #8d6e63;
+  --letter-text: #ffccbc;
+  --btn-primary-bg: #d84315;
+  --btn-primary-hover: #ff5722;
+  --btn-secondary-border: #8d6e63;
+  --btn-secondary-text: #ffccbc;
+  --btn-secondary-hover: rgba(141, 110, 99, 0.3);
+  --card-border: #5c4033;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --progress-empty: #3d3832;
+  --hint-bg: rgba(179, 157, 219, 0.15);
+  --hint-border: rgba(179, 157, 219, 0.4);
+  --btn-real-bg: #6d4c41;
+  --btn-real-text: #ffccbc;
+  --btn-ai-bg: #2e7d32;
+  --btn-ai-text: #c8e6c9;
+  --btn-next-bg: #1565c0;
+  --btn-home-bg: #3d3832;
+  --correct: #66bb6a;
+  --wrong: #ef5350;
+  --transition-overlay: rgba(28, 25, 23, 0.9);
+  --results-correct-bg: rgba(102, 187, 106, 0.2);
+  --results-wrong-bg: rgba(239, 83, 80, 0.2);
+}
+
 /* Viewport & base for mobile + desktop */
 html {
   box-sizing: border-box;
@@ -21,6 +87,8 @@ body {
 
 body {
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
 }
 
 #root {
