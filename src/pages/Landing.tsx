@@ -21,7 +21,7 @@ export default function Landing({ onStart }: LandingProps) {
           ))}
         </h1>
         <p className="landing-tagline">
-          Is it AI or real? Guess for each image.
+          Look for 5 seconds — then the image blurs. Choose AI or Real from memory. Score at the end.
         </p>
         <button type="button" className="landing-cta" onClick={onStart}>
           Play
