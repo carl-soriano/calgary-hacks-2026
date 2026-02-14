@@ -1,10 +1,11 @@
 import '../styles/landing.css'
 
 interface LandingProps {
-  onStart: () => void
+  onStart: () => void,
+  onStartTutorial?: () => void,
 }
 
-export default function Landing({ onStart }: LandingProps) {
+export default function Landing({ onStart, onStartTutorial }: LandingProps) {
   return (
     <div className="landing">
       <div className="landing-content">
@@ -18,6 +19,15 @@ export default function Landing({ onStart }: LandingProps) {
           onClick={onStart}
         >
           Start game
+        </button>
+      </div>
+      <div className="landing-info">
+        <button
+          type="button"
+          className="tutorial-btn"
+          onClick={onStartTutorial}
+        >
+          How to Identify AI Images
         </button>
       </div>
     </div>
