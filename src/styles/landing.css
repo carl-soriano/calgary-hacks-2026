@@ -2,6 +2,7 @@
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1rem;
@@ -54,6 +55,29 @@
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;
+}
+
+.tutorial-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #be3bf6 0%, #6725eb 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.tutorial-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.tutorial-btn:active {
+  transform: translateY(0);
 }
 
 .landing-cta {
@@ -120,4 +144,8 @@
   .landing {
     padding: 2rem;
   }
+}
+
+.landing-info {
+  margin-top: 2rem;
 }

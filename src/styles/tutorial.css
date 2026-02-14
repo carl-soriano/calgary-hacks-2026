@@ -1,0 +1,48 @@
+.tutorial-nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+}
+
+.nav-slot {
+  min-width: 3.25rem; /* reserve space equal to typical button width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing.tutorial .landing-content {
+  margin-bottom: 0.75rem;
+}
+
+.tutorial-nav button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}
+
+/* make secondary buttons visually distinct if needed */
+.tutorial-nav .secondary {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.tutorial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.tutorial-progress {
+  font-size: 0.9rem;
+  color: rgba(0,0,0,0.6);
+}
+
+.tutorial-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
