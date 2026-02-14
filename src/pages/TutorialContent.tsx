@@ -49,11 +49,11 @@ export function PanelFour() {
   return (
     <div>
       <h2>Weird Details</h2>
-      <p>
-        Check lighting, shadows, and small distortions. Pay attention to hands
-        and text.
-      </p>
-      <div className="tutorial-image-placeholder">[image goes here]</div>
+      <div className="tutorial-p-text">
+        <p>Look for:</p>
+        <p>- Distorted faces</p>
+        <p>- Extra or missing fingers</p>
+      </div>
     </div>
   );
 }
