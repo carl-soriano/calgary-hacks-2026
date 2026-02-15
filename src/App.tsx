@@ -48,6 +48,7 @@ function App() {
             setDifficulty(d)
             setPage('game')
           }}
+          onGoToNewsFeed={() => setPage('newsfeed')}
         />
       )}
     </main>
