@@ -85,7 +85,10 @@ body {
   padding: 0;
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: 100svh; /* small viewport height when mobile browser UI is visible */
   overflow-x: hidden;
+  /* Prevent overscroll glow/bounce on mobile where not needed */
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -100,13 +103,25 @@ body {
 #root {
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: 100svh;
 }
 
 main {
   min-height: 100vh;
   min-height: 100dvh;
+  min-height: 100svh;
   /* Reserve top space so fixed PlayerBadge (top-left) never overlaps content */
   padding-top: 3rem;
+}
+
+/* Mobile: faster tap response, subtle tap highlight */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(126, 87, 194, 0.2);
+  }
 }
 
 /* Ensure native form controls use the same font as the document */
