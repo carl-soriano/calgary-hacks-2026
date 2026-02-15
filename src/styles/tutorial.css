@@ -23,8 +23,7 @@
   display: flex;
   flex-direction: column;
   width: 80%;
-  min-height: 40vh;
-  max-height: 85vh;
+  height: 70vh;
   background-color: bisque;
   margin: 0.75rem 0.5rem;
   margin-top: 1rem;
@@ -38,6 +37,18 @@
 .landing.tutorial .landing-content > * {
   min-height: 0;
 }
+
+/* Fixed top-left Back button without affecting layout (placeholder keeps space) */
+.landing-cta--fixed {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 60;
+}
+
+.landing-cta--placeholder {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .tutorial-nav button {

@@ -59,7 +59,8 @@ export default function Tutorial({ onClose, children, onAnswer }: TutorialProps)
   return (
     <div className="landing tutorial">
       <div className="tutorial-header">
-        <button type="button" className="landing-cta" onClick={onClose}>Back to Home</button>
+        <button type="button" className="landing-cta landing-cta--placeholder" aria-hidden tabIndex={-1}>Back to Home</button>
+        <button type="button" className="landing-cta landing-cta--fixed" onClick={onClose}>← Home</button>
         <div className="tutorial-progress">{index + 1} / {panels.length}</div>
       </div>
 
