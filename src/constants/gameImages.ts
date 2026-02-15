@@ -1,4 +1,5 @@
 import type { GameImage } from '../types/game'
+import { hasPoolImages, getLevelImagesFromPool } from './imagePool'
 
 const GAME_IMAGES: readonly GameImage[] = [
   { id: '1', src: 'https://picsum.photos/seed/real1/500/400', isAI: false },
@@ -16,7 +17,12 @@ export function getRandomImage(): GameImage {
   return GAME_IMAGES[index] as GameImage
 }
 
+/** Uses folder-based pool (ai/ + real/) when available; otherwise fallback placeholder images. */
 export function getLevelImages(count: number = LEVELS): GameImage[] {
+  if (hasPoolImages()) {
+    const fromPool = getLevelImagesFromPool(count)
+    if (fromPool.length > 0) return fromPool
+  }
   return Array.from({ length: count }, () => getRandomImage())
 }
 

@@ -1,6 +1,7 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { getLevelImages } from '../../constants/gameImages'
 import { getLevelConfig, type DifficultyLevel } from '../../constants/levelConfig'
+import { saveGameResult } from '../../utils/gameStorage'
 import type { GameImage } from '../../types/game'
 import type { GameMode } from '../../pages/Landing'
 import '../../styles/game.css'
@@ -30,8 +31,17 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
   const [imageBlurred, setImageBlurred] = useState(mode === 'easy')
   const [secondsLeft, setSecondsLeft] = useState(viewSeconds)
   const [showHint, setShowHint] = useState(true)
+  const hasSavedResult = useRef(false)
 
   const isEasy = mode === 'easy'
+
+  useEffect(() => {
+    if (phase === 'score' && !hasSavedResult.current) {
+      saveGameResult(score, levelCount, difficulty)
+      hasSavedResult.current = true
+    }
+    if (phase !== 'score') hasSavedResult.current = false
+  }, [phase, score, levelCount, difficulty])
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem(HINT_SEEN_KEY)) {

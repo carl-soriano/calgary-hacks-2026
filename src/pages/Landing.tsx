@@ -1,8 +1,9 @@
 import '../styles/landing.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Tutorial from './Tutorial'
 import { panels as tutorialPanels } from './TutorialContent'
 import { LEVEL_CONFIGS, type DifficultyLevel } from '../constants/levelConfig'
+import { getStoredGameData } from '../utils/gameStorage'
 
 export type GameMode = 'default' | 'easy'
 
@@ -15,6 +16,10 @@ const TITLE_LETTERS = ['R', 'E', 'A', 'L', ' ', 'O', 'R', ' ', 'A', 'I', '?']
 export default function Landing({ onStart }: LandingProps) {
   const [showTutorial, setShowTutorial] = useState(false)
   const [difficulty, setDifficulty] = useState<DifficultyLevel>(1)
+  const [storedData, setStoredData] = useState<ReturnType<typeof getStoredGameData> | null>(null)
+  useEffect(() => {
+    setStoredData(getStoredGameData())
+  }, [])
 
   if (showTutorial) {
     return (
@@ -71,6 +76,14 @@ export default function Landing({ onStart }: LandingProps) {
           </button>
         </div>
         <p className="landing-easy-note">Easy: no timer, no blur — image stays visible.</p>
+        {storedData?.lastGame && (
+          <p className="landing-last-score" aria-live="polite">
+            Last score: {storedData.lastGame.score}/{storedData.lastGame.total}
+            {storedData.stats && storedData.stats.gamesPlayed > 1 && (
+              <> · {storedData.stats.gamesPlayed} games played</>
+            )}
+          </p>
+        )}
       </div>
       <div className="landing-info">
         <button
