@@ -1,0 +1,142 @@
+/* ───────────────────────────────────────
+   Player badge — top-left overlay
+   ─────────────────────────────────────── */
+.player-badge {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.player-badge__name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.player-badge__tier {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.player-badge__tier[data-tier="noob"] {
+  background: var(--text-muted);
+}
+
+.player-badge__tier[data-tier="apprentice"] {
+  background: var(--btn-next-bg);
+}
+
+.player-badge__tier[data-tier="pro"] {
+  background: var(--accent);
+}
+
+.player-badge__tier[data-tier="master"] {
+  background: linear-gradient(135deg, #ff8a65, #e53935);
+}
+
+/* ───────────────────────────────────────
+   Name prompt — fullscreen overlay
+   ─────────────────────────────────────── */
+.name-prompt {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--bg-page);
+}
+
+.name-prompt__card {
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+}
+
+.name-prompt__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 0.4rem;
+}
+
+.name-prompt__subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem;
+}
+
+.name-prompt__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.name-prompt__input {
+  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+  border: 2px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.name-prompt__input::placeholder {
+  color: var(--text-muted);
+}
+
+.name-prompt__input:focus {
+  border-color: var(--accent);
+}
+
+.name-prompt__btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--btn-primary-bg);
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.15s;
+  box-shadow: 0 4px 12px rgba(255, 138, 101, 0.4);
+}
+
+.name-prompt__btn:hover:not(:disabled) {
+  background-color: var(--btn-primary-hover);
+  transform: scale(1.03);
+}
+
+.name-prompt__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ───────────────────────────────────────
+   Mobile
+   ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .player-badge {
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .player-badge__name {
+    font-size: 0.78rem;
+  }
+
+  .player-badge__tier {
+    font-size: 0.6rem;
+  }
+}
