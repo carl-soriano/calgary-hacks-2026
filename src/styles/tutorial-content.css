@@ -92,3 +92,15 @@
         height: auto;
     }
 }
+
+/* Panel card styling that follows the tutorial theme variables */
+.panel-one-content {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background: var(--card-bg, rgba(255,255,255,0.95));
+    color: var(--text, #3b2b28);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: var(--card-elev-shadow, 0 6px 18px rgba(0,0,0,0.06));
+}
