@@ -38,6 +38,7 @@ export default function Tutorial({ onClose, children }: TutorialProps) {
 
   const [index, setIndex] = useState(0)
   const last = panels.length - 1
+  const [lastAnswer, setLastAnswer] = useState<boolean | null>(null)
 
   function goNext() {
     setIndex(i => Math.min(i + 1, last))
@@ -49,6 +50,7 @@ export default function Tutorial({ onClose, children }: TutorialProps) {
 
   function handleAnswer(correct: boolean) {
     if (typeof onAnswer === 'function') onAnswer(correct)
+    setLastAnswer(correct)
     goNext()
   }
 
@@ -63,7 +65,7 @@ export default function Tutorial({ onClose, children }: TutorialProps) {
 
       <div className="landing-content tutorial-panel">
         {isValidElement(current)
-          ? cloneElement(current, { onAnswer: handleAnswer, onNext: goNext })
+          ? cloneElement(current, { onAnswer: handleAnswer, onNext: goNext, lastAnswer })
           : <div>{String(current)}</div>
         }
       </div>

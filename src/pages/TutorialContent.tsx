@@ -139,20 +139,32 @@ export function PanelFive({ onAnswer }: { onAnswer?: (correct: boolean) => void 
     </div>
   );
 }
-
-export function PanelSix() {
+export function PanelSix({ lastAnswer }: { lastAnswer?: boolean | null }) {
   return (
-    <div>
-      <h2></h2>
-      <div className="panel-row">
-        <div className="tutorial-p-text">
-          <p></p>
-          <p></p>
-          <p></p>
-        </div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
+      <div style={{ textAlign: 'center' }}>
+        <h2>Result</h2>
+        <img
+          className="panel2-image"
+          src={aiHandsImg}
+          alt="Image of hands with extra fingers"
+          role="button"
+          tabIndex={0}
+        />
+
+        {lastAnswer === null || typeof lastAnswer === 'undefined' ? (
+          <p className="tutorial-p-text">No answer recorded.</p>
+        ) : lastAnswer ? (
+          <p className="tutorial-p-text" style={{ color: 'green', fontWeight: 600 }}>Correct — this image is AI-generated.</p>
+        ) : (
+          <p className="tutorial-p-text" style={{ color: 'crimson', fontWeight: 600 }}>Incorrect — this is the image that was AI-generated.</p>
+        )}
+
+        <p>If you look closely at the image, you'll notice that the hands are not quite right — they have an unnatural number of fingers.</p>
+
       </div>
     </div>
-  );
+  )
 }
 
 // Export a `panels` array so other modules can programmatically get every panel.
