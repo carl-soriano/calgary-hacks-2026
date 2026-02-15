@@ -2,9 +2,12 @@ import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import { getLevelImages } from '../../constants/gameImages'
 import { getLevelConfig, type DifficultyLevel } from '../../constants/levelConfig'
 import { saveGameResult } from '../../utils/gameStorage'
+import { analyzeImage, isAnalysisAvailable } from '../../services/imageAnalysis'
 import type { GameImage } from '../../types/game'
 import type { GameMode } from '../../pages/Landing'
+import type { ImageAnalysisResult } from '../../types/analysis'
 import '../../styles/game.css'
+
 const HINT_SEEN_KEY = 'ai-real-game-hint-seen'
 
 type Phase = 'playing' | 'score'
@@ -31,9 +34,11 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
   const [imageBlurred, setImageBlurred] = useState(mode === 'easy')
   const [secondsLeft, setSecondsLeft] = useState(viewSeconds)
   const [showHint, setShowHint] = useState(true)
+  const [analysisByIndex, setAnalysisByIndex] = useState<(ImageAnalysisResult | null)[]>([])
   const hasSavedResult = useRef(false)
 
   const isEasy = mode === 'easy'
+  const analysisAvailable = isAnalysisAvailable()
 
   useEffect(() => {
     if (phase === 'score' && !hasSavedResult.current) {
@@ -48,6 +53,22 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
       setShowHint(false)
     }
   }, [])
+
+  // Run OpenAI analysis in background for all round images (when API key is set)
+  useEffect(() => {
+    if (!analysisAvailable || phase !== 'playing' || levelImages.length === 0) return
+    const n = levelImages.length
+    setAnalysisByIndex(Array(n).fill(null))
+    levelImages.forEach((img, i) => {
+      analyzeImage(img.src).then((result) => {
+        setAnalysisByIndex((prev) => {
+          const next = [...prev]
+          next[i] = result
+          return next
+        })
+      })
+    })
+  }, [analysisAvailable, phase, levelImages])
 
   useEffect(() => {
     if (isEasy || phase !== 'playing') return
@@ -114,6 +135,7 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
     setScore(0)
     setLevelResults([])
     setLastLevelCorrect(null)
+    setAnalysisByIndex([])
     setImageBlurred(isEasy)
     setSecondsLeft(viewSeconds)
     setPhase('playing')
@@ -130,20 +152,44 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
           {score === levelCount ? 'Perfect!' : score >= levelCount / 2 ? 'Nice job!' : 'Keep practicing!'}
         </p>
         <h2 className="game-results-heading">What you got right and wrong</h2>
+        {analysisAvailable && (
+          <p className="game-results-ai-note">Comparing with OpenAI’s guesses when available.</p>
+        )}
         <ul className="game-results-list" aria-label="Results by level">
-          {levelImages.map((img, i) => (
-            <li
-              key={img.id + i}
-              className={`game-results-item ${results[i] ? 'game-results-item--correct' : 'game-results-item--wrong'}`}
-            >
-              <img src={img.src} alt="" className="game-results-thumb" />
-              <div className="game-results-info">
-                <span className="game-results-level">Image {i + 1}</span>
-                <span className="game-results-verdict">{results[i] ? 'Correct' : 'Wrong'}</span>
-                <span className="game-results-answer">{img.isAI ? 'AI-generated' : 'Real'}</span>
-              </div>
-            </li>
-          ))}
+          {levelImages.map((img, i) => {
+            const analysis = analysisByIndex[i]
+            const aiCorrect = analysis ? analysis.isAI === img.isAI : null
+            return (
+              <li
+                key={img.id + i}
+                className={`game-results-item ${results[i] ? 'game-results-item--correct' : 'game-results-item--wrong'}`}
+              >
+                <img src={img.src} alt="" className="game-results-thumb" />
+                <div className="game-results-info">
+                  <span className="game-results-level">Image {i + 1}</span>
+                  <span className="game-results-verdict">{results[i] ? 'Correct' : 'Wrong'}</span>
+                  <span className="game-results-answer">Answer: {img.isAI ? 'AI-generated' : 'Real'}</span>
+                  {analysisAvailable && (
+                    <span className="game-results-ai">
+                      {analysis ? (
+                        <>
+                          AI said {analysis.isAI ? 'AI' : 'Real'}
+                          <span className={aiCorrect ? 'game-results-ai--right' : 'game-results-ai--wrong'}>
+                            {' '}({aiCorrect ? 'correct' : 'wrong'})
+                          </span>
+                          {analysis.reasoning && (
+                            <span className="game-results-ai-reason"> — {analysis.reasoning}</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="game-results-ai-pending">AI said: …</span>
+                      )}
+                    </span>
+                  )}
+                </div>
+              </li>
+            )
+          })}
         </ul>
         <div className="game-score-actions">
           <button type="button" className="game-btn game-btn-next" onClick={playAgain}>
