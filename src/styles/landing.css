@@ -1,4 +1,6 @@
 .landing {
+  width: 100%;
+  min-width: 0; /* allow flex child to shrink */
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -10,17 +12,23 @@
   padding-right: max(1rem, env(safe-area-inset-right));
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
   background-color: var(--bg-page);
+  overflow-x: hidden;
 }
 
 .landing-content {
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .landing-title {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
   margin: 0 0 1.5rem;
+  padding: 0 0.25rem;
   font-family: inherit;
   font-size: 2.5rem;
   font-weight: 700;
@@ -173,7 +181,7 @@
   margin: 0.5rem 0 0;
 }
 
-/* Mobile: smaller letters, touch-friendly button */
+/* Mobile: smaller letters so "Real or AI?" fits viewport, touch-friendly buttons */
 @media (max-width: 480px) {
   .landing {
     padding: 0.75rem;
@@ -183,6 +191,7 @@
     font-size: 1.5rem;
     gap: 3px;
     margin-bottom: 1.25rem;
+    padding: 0;
   }
 
   .landing-letter {
@@ -218,6 +227,25 @@
     min-height: 3rem;
     padding: 0.7rem 1.5rem;
     font-size: 1rem;
+  }
+}
+
+/* Very narrow phones: scale down title so "Real or AI?" fits without being cut off */
+@media (max-width: 400px) {
+  .landing-title {
+    gap: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .landing-letter {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .landing-letter--space {
+    width: 8px;
+    height: 36px;
   }
 }
 
