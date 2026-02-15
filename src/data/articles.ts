@@ -370,13 +370,4 @@ const articles: Article[] = [
   },
 ]
 
-export const categories = [
-  "All",
-  "Learn About AI",
-  "AI in Society",
-  "Interactive Tools",
-  "Curriculum & Lessons",
-  "Parent & Teacher Guides",
-] as const
-
 export default articles

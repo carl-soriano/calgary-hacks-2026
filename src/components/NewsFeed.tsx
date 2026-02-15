@@ -1,18 +1,24 @@
-import { useState } from 'react'
-import articles, { categories } from '../data/articles'
+import articles from '../data/articles'
 import NewsCard from './NewsCard'
 import '../styles/newsfeed.css'
 
-function NewsFeed() {
-  const [activeCategory, setActiveCategory] = useState<string>('All')
+interface NewsFeedProps {
+  onBackToHome?: () => void
+}
 
-  const filtered =
-    activeCategory === 'All'
-      ? articles
-      : articles.filter((a) => a.category === activeCategory)
-
+function NewsFeed({ onBackToHome }: NewsFeedProps) {
   return (
     <section className="news-feed">
+      {onBackToHome && (
+        <button
+          type="button"
+          className="news-feed__back-btn"
+          onClick={onBackToHome}
+        >
+          &larr; Back to home
+        </button>
+      )}
+
       <header className="news-feed__header">
         <h1 className="news-feed__title">AI Learning Hub</h1>
         <p className="news-feed__subtitle">
@@ -21,26 +27,12 @@ function NewsFeed() {
         </p>
       </header>
 
-      <nav className="news-feed__filters" aria-label="Filter by category">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`news-feed__filter-btn${
-              activeCategory === cat ? ' news-feed__filter-btn--active' : ''
-            }`}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </nav>
-
       <div className="news-feed__count">
-        Showing {filtered.length} resource{filtered.length !== 1 && 's'}
+        {articles.length} resources
       </div>
 
-      <div className="news-feed__grid">
-        {filtered.map((article) => (
+      <div className="news-feed__track">
+        {articles.map((article) => (
           <NewsCard key={article.id} article={article} />
         ))}
       </div>
