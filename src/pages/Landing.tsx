@@ -51,25 +51,27 @@ export default function Landing({ onStart, onGoToNewsFeed }: LandingProps) {
           Pick a level: Easy has no timer; 1–5 add more images and less time, then the image blurs — choose from memory.
         </p>
         <div className="landing-levels">
-          <span className="landing-levels-label">Level</span>
-          {DIFFICULTY_LEVELS.map((d) => {
-            const config = LEVEL_CONFIGS[d]
-            const isEasy = d === 0
-            return (
-              <button
-                key={d}
-                type="button"
-                className={`landing-level-btn ${difficulty === d ? 'landing-level-btn--active' : ''}`}
-                onClick={() => setDifficulty(d)}
-                title={isEasy ? `${config.imageCount} images, no timer` : `${config.imageCount} images, ${config.viewSeconds}s each`}
-              >
-                {isEasy ? 'Easy' : d}
-                <span className="landing-level-meta">
-                  {config.imageCount} imgs{isEasy ? ' · no timer' : ` · ${config.viewSeconds}s`}
-                </span>
-              </button>
-            )
-          })}
+          <span className="landing-levels-label">Choose a level</span>
+          <div className="landing-levels-grid">
+            {DIFFICULTY_LEVELS.map((d) => {
+              const config = LEVEL_CONFIGS[d]
+              const isEasy = d === 0
+              return (
+                <button
+                  key={d}
+                  type="button"
+                  className={`landing-level-btn ${difficulty === d ? 'landing-level-btn--active' : ''}`}
+                  onClick={() => setDifficulty(d)}
+                  title={isEasy ? `${config.imageCount} images, no timer` : `${config.imageCount} images, ${config.viewSeconds}s each`}
+                >
+                  {isEasy ? 'Easy' : d}
+                  <span className="landing-level-meta">
+                    {config.imageCount} imgs{isEasy ? ' · no timer' : ` · ${config.viewSeconds}s`}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
         <div className="landing-actions">
           <button
