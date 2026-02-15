@@ -50,11 +50,60 @@
 .landing-tagline {
   font-size: 1rem;
   color: var(--text-secondary);
-  margin: 0 0 1.5rem;
-  max-width: 340px;
+  margin: 0 0 1rem;
+  max-width: 360px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.5;
+}
+
+.landing-levels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.landing-levels-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-right: 0.25rem;
+}
+
+.landing-level-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.65rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--card-border);
+  border: 2px solid var(--letter-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.landing-level-btn:hover {
+  color: var(--text-primary);
+  background: var(--letter-bg);
+}
+
+.landing-level-btn--active {
+  color: var(--letter-text);
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+}
+
+.landing-level-meta {
+  font-size: 0.65rem;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-top: 0.15rem;
 }
 
 .landing-actions {
@@ -103,6 +152,12 @@
   font-size: 0.875rem;
   color: var(--text-muted);
   margin: 0;
+}
+
+.landing-last-score {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: 0.5rem 0 0;
 }
 
 /* Mobile: smaller letters, touch-friendly button */
