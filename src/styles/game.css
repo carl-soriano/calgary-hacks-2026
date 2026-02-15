@@ -101,13 +101,9 @@
   z-index: 0;
 }
 
-.game-image-blur {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
+.game-image--blurred {
   filter: blur(14px);
-  z-index: 1;
+  transition: filter 0.15s;
 }
 
 .game-timer {
