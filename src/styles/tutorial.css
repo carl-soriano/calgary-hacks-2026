@@ -12,9 +12,32 @@
   justify-content: center;
 }
 
+/* Tutorial panel layout: header, flexible content, nav */
+.landing.tutorial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .landing.tutorial .landing-content {
-  margin-bottom: 0.75rem;
-  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-height: 40vh;
+  max-height: 85vh;
+  background-color: bisque;
+  margin: 0.75rem 0.5rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(252, 217, 186, 0.4);
+  overflow: hidden;
+}
+
+/* content area should allow children to grow/shrink properly */
+.landing.tutorial .landing-content > * {
+  min-height: 0;
+}
 }
 
 .tutorial-nav button {
