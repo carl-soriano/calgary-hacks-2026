@@ -14,7 +14,7 @@ type Page = 'landing' | 'game' | 'newsfeed'
 function App() {
   const [page, setPage] = useState<Page>('landing')
   const [mode, setMode] = useState<GameMode>('default')
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>(1)
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>(0)
   const { profile, setName, recordPerfectGame } = usePlayerProfile()
 
   if (!profile) {

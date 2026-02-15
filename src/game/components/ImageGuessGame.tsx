@@ -214,7 +214,7 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
 
   return (
     <div className="game">
-      <p className="game-level">Level {difficulty} · Image {levelIndex + 1} of {levelCount}</p>
+      <p className="game-level">{difficulty === 0 ? 'Easy' : `Level ${difficulty}`} · Image {levelIndex + 1} of {levelCount}</p>
       <div
         className="game-progress"
         role="progressbar"

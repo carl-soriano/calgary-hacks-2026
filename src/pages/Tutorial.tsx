@@ -1,4 +1,5 @@
 import '../styles/landing.css'
+import '../styles/hub.css'
 import '../styles/tutorial.css'
 import { useState, Children, isValidElement, ReactNode, cloneElement } from 'react'
 
@@ -59,9 +60,9 @@ export default function Tutorial({ onClose, children, onAnswer }: TutorialProps)
   return (
     <div className="landing tutorial">
       <div className="tutorial-header">
-        <button type="button" className="landing-cta landing-cta--placeholder" aria-hidden tabIndex={-1}>Back to Home</button>
-        <button type="button" className="landing-cta landing-cta--fixed" onClick={onClose}>← Home</button>
-        <div className="tutorial-progress">{index + 1} / {panels.length}</div>
+        <button type="button" className="hub-back-btn hub-back-btn--placeholder" aria-hidden tabIndex={-1}>← Home</button>
+        <button type="button" className="hub-back-btn hub-back-btn--fixed" onClick={onClose}>← Home</button>
+        <div className="tutorial-progress hub-muted">{index + 1} / {panels.length}</div>
       </div>
 
       <div className="landing-content tutorial-panel">
@@ -74,13 +75,13 @@ export default function Tutorial({ onClose, children, onAnswer }: TutorialProps)
       <div className="tutorial-nav">
         <div className="nav-slot nav-left">
           {index > 0 && (
-            <button type="button" className="landing-cta" onClick={goPrev}>←</button>
+            <button type="button" className="hub-back-btn" onClick={goPrev}>←</button>
           )}
         </div>
 
         <div className="nav-slot nav-right">
           {index < last && (
-            <button type="button" className="landing-cta" onClick={goNext}>→</button>
+            <button type="button" className="hub-back-btn" onClick={goNext}>→</button>
           )}
         </div>
       </div>
