@@ -1,3 +1,6 @@
+/* Load Mulish from Google Fonts and set as primary UI font */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap');
+
 /* Theme: light (default) and dark */
 :root,
 [data-theme="light"] {
@@ -69,9 +72,6 @@ html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
 }
-
-/* Load Mulish from Google Fonts and set as primary UI font */
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap');
 
 *,
 *::before,
