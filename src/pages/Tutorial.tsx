@@ -5,10 +5,10 @@ import { useState, Children, isValidElement, ReactNode, cloneElement } from 'rea
 interface TutorialProps {
   onClose: () => void,
   children?: ReactNode | ReactNode[],
-  onAnswer?: (correct: boolean) => void,
+  onAnswer: (correct: boolean) => void,
 }
 
-export default function Tutorial({ onClose, children }: TutorialProps) {
+export default function Tutorial({ onClose, children, onAnswer }: TutorialProps) {
   // Normalize children into an array of panels (ReactNodes)
   const childArray = children ? Children.toArray(children) : []
 

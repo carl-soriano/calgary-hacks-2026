@@ -153,7 +153,7 @@ export function PanelSix({ lastAnswer }: { lastAnswer?: boolean | null }) {
         />
 
         {lastAnswer === null || typeof lastAnswer === 'undefined' ? (
-          <p className="tutorial-p-text">No answer recorded.</p>
+          <p className="tutorial-p-text"></p>
         ) : lastAnswer ? (
           <p className="tutorial-p-text" style={{ color: 'green', fontWeight: 600 }}>Correct — this image is AI-generated.</p>
         ) : (
