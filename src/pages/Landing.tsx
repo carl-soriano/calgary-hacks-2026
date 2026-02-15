@@ -2,17 +2,19 @@ import '../styles/landing.css'
 import { useState } from 'react'
 import Tutorial from './Tutorial'
 import { panels as tutorialPanels } from './TutorialContent'
+import { LEVEL_CONFIGS, type DifficultyLevel } from '../constants/levelConfig'
 
 export type GameMode = 'default' | 'easy'
 
 interface LandingProps {
-  onStart: (mode: GameMode) => void
+  onStart: (mode: GameMode, difficulty: DifficultyLevel) => void
 }
 
 const TITLE_LETTERS = ['R', 'E', 'A', 'L', ' ', 'O', 'R', ' ', 'A', 'I', '?']
 
 export default function Landing({ onStart }: LandingProps) {
   const [showTutorial, setShowTutorial] = useState(false)
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>(1)
 
   if (showTutorial) {
     return (
@@ -40,13 +42,31 @@ export default function Landing({ onStart }: LandingProps) {
           ))}
         </h1>
         <p className="landing-tagline">
-          Look for 5 seconds — then the image blurs. Choose AI or Real from memory. Score at the end.
+          Pick a level: more images and less time as you go. Then the image blurs — choose AI or Real from memory.
         </p>
+        <div className="landing-levels">
+          <span className="landing-levels-label">Level</span>
+          {( [1, 2, 3, 4, 5] as const ).map((d) => {
+            const config = LEVEL_CONFIGS[d]
+            return (
+              <button
+                key={d}
+                type="button"
+                className={`landing-level-btn ${difficulty === d ? 'landing-level-btn--active' : ''}`}
+                onClick={() => setDifficulty(d)}
+                title={`${config.imageCount} images, ${config.viewSeconds}s each`}
+              >
+                {d}
+                <span className="landing-level-meta">{config.imageCount} imgs · {config.viewSeconds}s</span>
+              </button>
+            )
+          })}
+        </div>
         <div className="landing-actions">
-          <button type="button" className="landing-cta" onClick={() => onStart('default')}>
+          <button type="button" className="landing-cta" onClick={() => onStart('default', difficulty)}>
             Play
           </button>
-          <button type="button" className="landing-cta landing-cta--secondary" onClick={() => onStart('easy')}>
+          <button type="button" className="landing-cta landing-cta--secondary" onClick={() => onStart('easy', difficulty)}>
             Easy mode
           </button>
         </div>
