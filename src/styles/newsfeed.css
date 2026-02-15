@@ -11,58 +11,30 @@
   background-color: var(--bg-page);
 }
 
-/* ───────────────────────────────────────
-   Back button
-   ─────────────────────────────────────── */
-.news-feed__back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0.25rem 0;
+/* Back button uses .hub-back-btn from hub.css */
+
+.news-feed .hub-back-btn {
   margin-bottom: 1.25rem;
-  transition: opacity 0.15s;
-}
-
-.news-feed__back-btn:hover {
-  opacity: 0.7;
 }
 
 /* ───────────────────────────────────────
-   Header
+   Header (title/subtitle from hub.css)
    ─────────────────────────────────────── */
 .news-feed__header {
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
-.news-feed__title {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin: 0 0 0.4rem;
-}
-
-.news-feed__subtitle {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
+.news-feed__header .hub-subtitle {
   max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.5;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ───────────────────────────────────────
-   Result count
+   Result count (uses .hub-muted)
    ─────────────────────────────────────── */
 .news-feed__count {
-  font-size: 0.8rem;
-  color: var(--text-muted);
   margin-bottom: 0.75rem;
 }
 
@@ -100,35 +72,35 @@
 
 .news-card__badge {
   align-self: flex-start;
-  font-size: 0.65rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--accent);
   background: var(--hint-bg);
-  padding: 0.15rem 0.55rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
   margin-bottom: 0.6rem;
 }
 
 .news-card__title {
-  font-size: 0.95rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.45;
   margin: 0 0 0.4rem;
   color: var(--text-primary);
 }
 
 .news-card__description {
-  font-size: 0.82rem;
+  font-size: 1rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   flex: 1;
   margin: 0 0 0.7rem;
 }
 
 .news-card__source {
-  font-size: 0.7rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--accent);
   text-transform: uppercase;

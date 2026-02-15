@@ -12,13 +12,13 @@
 }
 
 .game-title {
-  font-size: 1.75rem;
-  margin: 0 0 0.25rem;
+  font-size: 2.05rem;
+  margin: 0 0 0.35rem;
   color: var(--text-primary);
 }
 
 .game-level {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--accent);
   margin: 0 0 0.5rem;
@@ -27,13 +27,13 @@
 .game-progress {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.65rem;
   margin-bottom: 0.75rem;
 }
 
 .game-progress-dot {
-  width: 10px;
-  height: 10px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: var(--progress-empty);
   transition: background 0.2s;
@@ -44,34 +44,39 @@
 }
 
 .game-instruction {
+  font-size: 1.125rem;
   color: var(--text-secondary);
   margin: 0 0 1rem;
+  line-height: 1.55;
 }
 
 .game-hint {
   background: var(--hint-bg);
   border: 1px solid var(--hint-border);
   border-radius: 12px;
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.35rem;
   margin-bottom: 1rem;
   text-align: left;
 }
 
 .game-hint-text {
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   color: var(--text-primary);
   margin: 0 0 0.5rem;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .game-hint-dismiss {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--accent);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem 0;
+  padding: 0.4rem 0;
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .game-hint-dismiss:hover {
@@ -108,12 +113,12 @@
 
 .game-timer {
   margin: 0 0 1rem;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   color: var(--text-primary);
 }
 
 .game-timer-number {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
   color: var(--accent);
 }
@@ -124,7 +129,7 @@
 }
 
 .game-reveals-left {
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--accent);
   margin: 0 0 0.75rem;
@@ -146,7 +151,7 @@
 }
 
 .game-transition-text {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -173,8 +178,9 @@
 
 
 .game-btn {
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
+  min-height: 3rem;
+  padding: 0.9rem 2.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
   border: none;
   border-radius: 24px;
@@ -236,20 +242,20 @@
 }
 
 .game-score-value {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
   color: var(--text-primary);
   margin: 0 0 0.5rem;
 }
 
 .game-score-label {
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   color: var(--text-secondary);
   margin: 0 0 1rem;
 }
 
 .game-results-heading {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 0.75rem;
@@ -258,9 +264,19 @@
 
 .game-score-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  max-width: 20rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-score-actions .game-btn {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .game-btn-home {
@@ -277,6 +293,24 @@
   opacity: 0.85;
 }
 
+/* Light mode: ensure score screen buttons have clear contrast and match theme */
+[data-theme="light"] .game-score-actions .game-btn-next {
+  background: var(--btn-next-bg);
+  color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .game-score-actions .game-btn-home {
+  background: var(--btn-home-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--card-border);
+}
+
+[data-theme="light"] .game-score-actions .game-btn-learn {
+  background: var(--accent);
+  color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+}
 
 /* Results breakdown: which images were right/wrong */
 .game-results-list {
@@ -326,13 +360,13 @@
 }
 
 .game-results-level {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .game-results-verdict {
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   font-weight: 700;
 }
 
@@ -345,19 +379,19 @@
 }
 
 .game-results-answer {
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: var(--text-secondary);
 }
 
 .game-results-ai-note {
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: var(--text-muted);
   margin: -0.25rem 0 0.5rem;
 }
 
 .game-results-ai {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   color: var(--text-muted);
   margin-top: 0.25rem;
 }

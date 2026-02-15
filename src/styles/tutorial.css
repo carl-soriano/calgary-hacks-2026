@@ -58,28 +58,10 @@ html[data-theme="dark"] .landing.tutorial {
   min-height: 0;
 }
 
-/* Fixed top-left Back button without affecting layout (placeholder keeps space) */
-.landing-cta--fixed {
-  position: fixed;
-  left: 1rem;
-  top: 1rem;
-  z-index: 60;
-}
-
-.landing-cta--placeholder {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.tutorial-nav button {
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-}
-
-/* make secondary buttons visually distinct if needed */
-.tutorial-nav .secondary {
-  background: transparent;
-  border: 1px solid rgba(0,0,0,0.08);
+.tutorial-nav .hub-back-btn {
+  min-height: 3rem;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
 }
 
 .tutorial-header {
@@ -88,11 +70,31 @@ html[data-theme="dark"] .landing.tutorial {
   justify-content: space-between;
   width: 100%;
   margin-bottom: 0.5rem;
+  /* Keep progress "1 / 6" left of the fixed theme toggle (top-right) */
+  padding-right: 6rem;
+  padding-right: max(6rem, env(safe-area-inset-right));
 }
 
 .tutorial-progress {
-  font-size: 0.9rem;
+  font-size: 1.0625rem;
   color: var(--muted);
+}
+
+/* Panel typography: match hub (Tutorial + AI Hub), slightly larger for accessibility */
+.landing.tutorial .tutorial-panel h2 {
+  font-size: 2.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.landing.tutorial .tutorial-panel .tutorial-p-text,
+.landing.tutorial .tutorial-panel p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text);
+  margin: 0 0 0.75rem;
 }
 
 .tutorial-image {

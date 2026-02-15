@@ -1,5 +1,6 @@
 import articles from '../data/articles'
 import NewsCard from './NewsCard'
+import '../styles/hub.css'
 import '../styles/newsfeed.css'
 
 interface NewsFeedProps {
@@ -12,22 +13,22 @@ function NewsFeed({ onBackToHome }: NewsFeedProps) {
       {onBackToHome && (
         <button
           type="button"
-          className="news-feed__back-btn"
+          className="hub-back-btn"
           onClick={onBackToHome}
         >
-          &larr; Back to home
+          ← Back to home
         </button>
       )}
 
       <header className="news-feed__header">
-        <h1 className="news-feed__title">AI Learning Hub</h1>
-        <p className="news-feed__subtitle">
+        <h1 className="hub-title">AI Learning Hub</h1>
+        <p className="hub-subtitle">
           Curated articles, tools, and resources to help kids and educators
           explore artificial intelligence.
         </p>
       </header>
 
-      <div className="news-feed__count">
+      <div className="hub-muted news-feed__count">
         {articles.length} resources
       </div>
 

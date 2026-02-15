@@ -1,0 +1,93 @@
+/**
+ * Shared styles for Tutorial and AI Learning Hub (NewsFeed):
+ * back button, titles, subtitles, and body text.
+ */
+
+/* ─── Back button (same on Tutorial and NewsFeed) ─── */
+.hub-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  gap: 0.4rem;
+  padding: 0.7rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  box-shadow: none;
+}
+
+.hub-back-btn:hover {
+  background: var(--hint-bg);
+  color: var(--text-primary);
+  border-color: var(--hint-border);
+}
+
+/* ─── Typography (Tutorial panels + NewsFeed header) ─── */
+.hub-title {
+  font-size: 2.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+  font-family: inherit;
+}
+
+.hub-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  font-family: inherit;
+}
+
+.hub-body {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+  font-family: inherit;
+}
+
+.hub-muted {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  font-family: inherit;
+}
+
+/* Fixed position variant (Tutorial) — top-right but left of the theme toggle so both are visible */
+.hub-back-btn--fixed {
+  position: fixed;
+  left: auto;
+  right: 7rem;
+  right: max(7rem, calc(1rem + env(safe-area-inset-right)));
+  top: 1rem;
+  z-index: 60;
+}
+
+.hub-back-btn--placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .hub-back-btn {
+    min-height: 3rem;
+    padding: 0.7rem 1.35rem;
+    font-size: 1rem;
+  }
+
+  .hub-title {
+    font-size: 1.6rem;
+  }
+
+  .hub-subtitle {
+    font-size: 1.0625rem;
+  }
+}

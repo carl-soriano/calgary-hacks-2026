@@ -94,6 +94,7 @@ body {
   background-color: var(--bg-page);
   color: var(--text-primary);
   font-family: 'Mulish', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Color Emoji', 'Apple Color Emoji', sans-serif;
+  font-size: 1.125rem; /* Larger base for accessibility (≈18px) */
 }
 
 #root {
@@ -104,6 +105,8 @@ body {
 main {
   min-height: 100vh;
   min-height: 100dvh;
+  /* Reserve top space so fixed PlayerBadge (top-left) never overlaps content */
+  padding-top: 3rem;
 }
 
 /* Ensure native form controls use the same font as the document */
