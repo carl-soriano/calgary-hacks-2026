@@ -244,14 +244,11 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
       )}
 
       <div className={`game-image-wrap ${isEasy ? '' : 'game-image-wrap--timer'}`}>
-        <img src={current.src} alt="" className={`game-image ${isEasy ? '' : 'game-image-sharp'}`} />
-        {!isEasy && imageBlurred && (
-          <div
-            className="game-image-blur"
-            style={{ backgroundImage: `url(${current.src})` }}
-            aria-hidden
-          />
-        )}
+        <img
+          src={current.src}
+          alt=""
+          className={`game-image ${isEasy ? '' : 'game-image-sharp'}${!isEasy && imageBlurred ? ' game-image--blurred' : ''}`}
+        />
         {!isEasy && isTransitioning && (
           <div className="game-transition" aria-hidden>
             <span className="game-transition-text">Next image…</span>

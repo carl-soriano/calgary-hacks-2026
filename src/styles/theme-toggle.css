@@ -15,7 +15,8 @@
   border: 1px solid var(--letter-border);
   border-radius: 20px;
   cursor: pointer;
-  z-index: 100;
+  z-index: 1001;
+  /* Ensured above tutorial (z-index 100) */
   transition: background 0.2s, color 0.2s;
 }
 

@@ -39,6 +39,47 @@
 }
 
 /* ───────────────────────────────────────
+   Category filter bubbles
+   ─────────────────────────────────────── */
+.news-feed__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  max-width: 1120px;
+  margin: 0 auto 1rem;
+}
+
+.news-feed__bubble {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--card-border);
+  background: var(--bg-page);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.news-feed__bubble:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.news-feed__bubble--active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.news-feed__bubble--active:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* ───────────────────────────────────────
    Card grid
    ─────────────────────────────────────── */
 .news-feed__track {
