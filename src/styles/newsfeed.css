@@ -67,13 +67,13 @@
 }
 
 /* ───────────────────────────────────────
-   Vertical list
+   Card grid
    ─────────────────────────────────────── */
 .news-feed__track {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
