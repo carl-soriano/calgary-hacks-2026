@@ -10,7 +10,6 @@ const GAME_IMAGES: readonly GameImage[] = [
   { id: '6', src: 'https://picsum.photos/seed/ai3/500/400', isAI: true },
 ]
 
-export const LEVELS = 5
 
 export function getRandomImage(): GameImage {
   const index = Math.floor(Math.random() * GAME_IMAGES.length)
@@ -18,7 +17,7 @@ export function getRandomImage(): GameImage {
 }
 
 /** Uses folder-based pool (ai/ + real/) when available; otherwise fallback placeholder images. */
-export function getLevelImages(count: number = LEVELS): GameImage[] {
+export function getLevelImages(count: number): GameImage[] {
   if (hasPoolImages()) {
     const fromPool = getLevelImagesFromPool(count)
     if (fromPool.length > 0) return fromPool
