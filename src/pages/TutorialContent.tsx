@@ -1,5 +1,10 @@
 import React from "react";
-import '../styles/tutorial-content.css'
+import "../styles/tutorial-content.css";
+import aiImg from "../assets/tutorial-images/ai.png";
+import forestImg from "../assets/tutorial-images/forest.jpg";
+import handsImg from "../assets/tutorial-images/hands.jpg";
+import aiHandsImg from "../assets/tutorial-images/ai-hands.webp";
+import teensImg from "../assets/tutorial-images/teens.webp";
 
 export function PanelOne() {
   return (
@@ -10,6 +15,14 @@ export function PanelOne() {
           AI is created when people teach machines to think, solve problems, and
           make decisions.
         </p>
+
+        <p>
+          AI can even be used to generate images and videos! In this tutorial,
+          you'll learn how to spot AI-generated images.
+        </p>
+        <div style={{ textAlign: "center" }}>
+          <img src={aiImg} alt="Image of an AI symbol" style={{ width: 400 }} />
+        </div>
       </div>
     </div>
   );
@@ -49,26 +62,100 @@ export function PanelFour() {
   return (
     <div>
       <h2>Weird Details</h2>
-      <div className="tutorial-p-text">
-        <p>Look for:</p>
-        <p>- Distorted faces</p>
-        <p>- Extra or missing fingers</p>
+      <div className="panel-row">
+        <div className="tutorial-p-text">
+          <p>Look for:</p>
+          <p>- Distorted faces</p>
+          <p>- Extra or missing fingers</p>
+        </div>
+
+        <div className="panel-image-wrapper">
+          <img
+            className="panel2-image"
+            src={handsImg}
+            alt="Image of hands with extra fingers"
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-export function PanelFive() {
+export function PanelFive({ onAnswer }: { onAnswer?: (correct: boolean) => void }) {
+  const handleLeftClick = () => {
+    if (onAnswer) onAnswer(false)
+  }
+
+  const handleRightClick = () => {
+    if (onAnswer) onAnswer(true)
+  }
+
+  const handleLeftKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      if (onAnswer) onAnswer(false)
+    }
+  }
+
+  const handleRightKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      if (onAnswer) onAnswer(true)
+    }
+  }
+
+  return (
+    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+      <h2>Try it Yourself!</h2>
+      <p style={{ marginTop: "0px" }}>Select the image that is <strong>AI-generated</strong>.</p>
+      
+      <div className="panel-row-compare">
+        <div className="panel-image-wrapper">
+         <img
+            className="panel2-image"
+            src={teensImg}
+            alt="Image of teens"
+            role="button"
+            tabIndex={0}
+            onClick={handleLeftClick}
+            onKeyDown={handleLeftKey}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+
+        <div className="panel-image-wrapper">
+          <img
+            className="panel2-image"
+            src={aiHandsImg}
+            alt="Image of hands with extra fingers"
+            role="button"
+            tabIndex={0}
+            onClick={handleRightClick}
+            onKeyDown={handleRightKey}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function PanelSix() {
   return (
     <div>
-      <h2>Artifacts</h2>
-      <p>Search for repeating patterns, odd textures, and mismatched edges.</p>
-      <div className="tutorial-image-placeholder">[image goes here]</div>
+      <h2></h2>
+      <div className="panel-row">
+        <div className="tutorial-p-text">
+          <p></p>
+          <p></p>
+          <p></p>
+        </div>
+      </div>
     </div>
   );
 }
 
 // Export a `panels` array so other modules can programmatically get every panel.
-export const panels = [PanelOne, PanelTwo, PanelThree, PanelFour, PanelFive]
+export const panels = [PanelOne, PanelTwo, PanelThree, PanelFour, PanelFive, PanelSix];
 
 export default null;

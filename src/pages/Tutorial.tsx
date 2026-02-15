@@ -1,10 +1,11 @@
 import '../styles/landing.css'
 import '../styles/tutorial.css'
-import { useState, Children, isValidElement, ReactNode } from 'react'
+import { useState, Children, isValidElement, ReactNode, cloneElement } from 'react'
 
 interface TutorialProps {
   onClose: () => void,
-  children?: ReactNode | ReactNode[]
+  children?: ReactNode | ReactNode[],
+  onAnswer?: (correct: boolean) => void,
 }
 
 export default function Tutorial({ onClose, children }: TutorialProps) {
@@ -46,6 +47,11 @@ export default function Tutorial({ onClose, children }: TutorialProps) {
     setIndex(i => Math.max(i - 1, 0))
   }
 
+  function handleAnswer(correct: boolean) {
+    if (typeof onAnswer === 'function') onAnswer(correct)
+    goNext()
+  }
+
   const current = panels[index]
 
   return (
@@ -57,7 +63,7 @@ export default function Tutorial({ onClose, children }: TutorialProps) {
 
       <div className="landing-content tutorial-panel">
         {isValidElement(current)
-          ? current
+          ? cloneElement(current, { onAnswer: handleAnswer, onNext: goNext })
           : <div>{String(current)}</div>
         }
       </div>

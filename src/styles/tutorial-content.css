@@ -1,3 +1,94 @@
 .tutorial-p-text {
     text-align: left;
 }
+
+.panel2-image {
+    width: 200px;
+    margin: 0 10px;
+    border-radius: 10px;
+}
+
+/* Layout for panels with text + image side-by-side */
+.panel-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.panel-image-wrapper {
+    flex: 0 0 220px; /* reserve width for image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel-row-compare {
+    display: flex;
+    flex-direction: row;
+    gap: 0; /* no gap between the two images */
+    align-items: stretch;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+/* When used for image comparison, make each child take half the width */
+.panel-row-compare > * {
+    flex: 1 1 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* ensure no internal spacing */
+}
+
+/* images fill their halves with no gap */
+.panel-row-compare img {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-height: 100%;
+    object-fit: cover
+}
+
+.panel-row-compare img:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* rounded outer corners while keeping the seam between images square */
+.panel-row-compare > :first-child img {
+    border-radius: 8px 0 0 8px;
+}
+.panel-row-compare > :last-child img {
+    border-radius: 0 8px 8px 0;
+}
+
+/* Ensure tutorial-panel children can expand to fill available vertical space */
+/* .landing-content.tutorial-panel .panel-row-compare {
+    min-height: 0; /* allow flex children to shrink properly */
+    /* flex: 1 1 auto;
+} */ */
+
+.tutorial-p-text {
+    flex: 1 1 auto;
+}
+
+@media (max-width: 640px) {
+    .panel-row {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .panel-image-wrapper {
+        flex: unset;
+    }
+    .panel2-image {
+        width: 100%;
+        max-width: 320px;
+    }
+    .panel-row-compare {
+        flex-direction: column;
+        height: auto;
+    }
+}
