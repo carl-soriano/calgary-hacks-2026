@@ -2,66 +2,66 @@
   display: flex;
   gap: 1rem;
   justify-content: space-between;
-  margin-top: 1.25rem;
+  margin-top: auto;
+  /* Push to bottom */
+  width: 100%;
+  padding-top: 1.5rem;
 }
 
 .nav-slot {
-  min-width: 3.25rem; /* reserve space equal to typical button width */
+  min-width: 3.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Tutorial panel layout: header, flexible content, nav */
+/* Tutorial panel layout */
 .landing.tutorial {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 100;
+  /* Ensure it sits on top */
 }
 
-/* color variables for tutorial (light defaults) */
+/* Theme variables */
 .landing.tutorial {
-  --bg-orange: #F4D6CC;
+  --bg-panel: #fffbf7;
   --text: #3b2b28;
-  --muted: rgba(0,0,0,0.6);
-  --card-shadow: 0 4px 12px rgba(252, 217, 186, 0.4);
-  --card-elev-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  --muted: rgba(0, 0, 0, 0.5);
+  --accent: #E67E22;
+  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+  --radius: 16px;
+}
+
+html[data-theme="dark"] .landing.tutorial {
+  --bg-panel: #2a2a2a;
+  /* Lighter than #1e1e1e */
+  --text: #f0f0f0;
+  --muted: rgba(255, 255, 255, 0.5);
+  --accent: #F39C12;
+  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
 }
 
 .landing.tutorial .landing-content {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  height: 70vh;
-  background-color: var(--bg-orange);
-  margin: 0.75rem 0.5rem;
-  margin-top: 1rem;
-  border-radius: 10px;
-  padding: 10px 20px;
+  width: 90%;
+  max-width: 1000px;
+  height: 75vh;
+  /* Fixed height to keep buttons stable */
+  max-height: 85vh;
+  background-color: var(--bg-panel);
+  margin: 1rem auto;
+  border-radius: var(--radius);
+  padding: 2.5rem;
   box-shadow: var(--card-shadow);
-  overflow: hidden;
+  overflow-y: hidden;
+  /* Main scroll handled by content if needed, but nav stays */
   color: var(--text);
-}
-
-/* respect global theme attribute set by ThemeContext */
-html[data-theme="dark"] .landing.tutorial {
-  --bg-orange: #202428;
-  --card-bg: rgba(20,20,20,0.95);
-  --text: #e7e7e7;
-  --muted: rgba(255,255,255,0.7);
-  --card-shadow: 0 4px 12px rgba(0,0,0,0.5);
-  --card-elev-shadow: 0 6px 18px rgba(0,0,0,0.5);
-}
-
-/* content area should allow children to grow/shrink properly */
-.landing.tutorial .landing-content > * {
-  min-height: 0;
-}
-
-.tutorial-nav .hub-back-btn {
-  min-height: 3rem;
-  padding: 0.7rem 1.1rem;
-  font-size: 1rem;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .tutorial-header {
@@ -69,37 +69,96 @@ html[data-theme="dark"] .landing.tutorial {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 0.5rem;
-  /* Keep progress "1 / 6" left of the fixed theme toggle (top-right) */
-  padding-right: 6rem;
-  padding-right: max(6rem, env(safe-area-inset-right));
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+
+html[data-theme="dark"] .tutorial-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 
 .tutorial-progress {
-  font-size: 1.0625rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: var(--muted);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
 }
 
-/* Panel typography: match hub (Tutorial + AI Hub), slightly larger for accessibility */
+html[data-theme="dark"] .tutorial-progress {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Typography */
 .landing.tutorial .tutorial-panel h2 {
-  font-size: 2.05rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  margin: 0 0 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  margin: 0 0 1rem;
+  text-align: center;
 }
 
 .landing.tutorial .tutorial-panel .tutorial-p-text,
 .landing.tutorial .tutorial-panel p {
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.7;
   color: var(--text);
-  margin: 0 0 0.75rem;
+  margin: 0 0 1rem;
+}
+
+/* Navigation Buttons */
+.tutorial-nav .hub-back-btn {
+  min-height: 2.75rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: 2px solid var(--muted);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tutorial-nav .hub-back-btn:hover {
+  background: var(--text);
+  color: var(--bg-panel);
+  border-color: var(--text);
+}
+
+/* Fade animation for panel content */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tutorial-panel-content {
+  animation: fadeIn 0.4s ease-out;
+  width: 100%;
+  flex: 1;
+  /* Take up available space */
+  overflow-y: auto;
+  /* Scroll if content is too long */
+  min-height: 0;
+  /* Allow shrinking */
 }
 
 .tutorial-image {
   max-width: 100%;
   height: auto;
-  margin-top: 1rem;
-  border-radius: 8px;
+  margin: 1.5rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: block;
 }
