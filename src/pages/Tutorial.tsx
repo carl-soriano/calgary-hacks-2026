@@ -6,7 +6,7 @@ import { useState, Children, isValidElement, ReactNode, cloneElement } from 'rea
 interface TutorialProps {
   onClose: () => void,
   children?: ReactNode | ReactNode[],
-  onAnswer: (correct: boolean) => void,
+  onAnswer?: (correct: boolean) => void,
 }
 
 export default function Tutorial({ onClose, children, onAnswer }: TutorialProps) {
@@ -59,30 +59,46 @@ export default function Tutorial({ onClose, children, onAnswer }: TutorialProps)
 
   return (
     <div className="landing tutorial">
-      <div className="tutorial-header">
-        <button type="button" className="hub-back-btn hub-back-btn--placeholder" aria-hidden tabIndex={-1}>← Home</button>
-        <button type="button" className="hub-back-btn hub-back-btn--fixed" onClick={onClose}>← Home</button>
-        <div className="tutorial-progress hub-muted">{index + 1} / {panels.length}</div>
-      </div>
+      <div className="landing-content">
+        <div className="tutorial-header">
+          <button type="button" className="hub-back-btn" onClick={onClose} aria-label="Close tutorial">
+            ✕
+          </button>
 
-      <div className="landing-content tutorial-panel">
-        {isValidElement(current)
-          ? cloneElement(current, { onAnswer: handleAnswer, onNext: goNext, lastAnswer })
-          : <div>{String(current)}</div>
-        }
-      </div>
+          <div className="tutorial-progress">
+            Step {index + 1} of {panels.length}
+          </div>
 
-      <div className="tutorial-nav">
-        <div className="nav-slot nav-left">
-          {index > 0 && (
-            <button type="button" className="hub-back-btn" onClick={goPrev}>←</button>
-          )}
+          <div style={{ width: '2rem' }}></div> {/* Spacer for alignment */}
         </div>
 
-        <div className="nav-slot nav-right">
-          {index < last && (
-            <button type="button" className="hub-back-btn" onClick={goNext}>→</button>
-          )}
+        <div className="tutorial-panel-content" key={index}>
+          {isValidElement(current)
+            ? cloneElement(current as any, { onAnswer: handleAnswer, onNext: goNext, lastAnswer })
+            : <div>{String(current)}</div>
+          }
+        </div>
+
+        <div className="tutorial-nav">
+          <div className="nav-slot nav-left">
+            {index > 0 ? (
+              <button type="button" className="hub-back-btn" onClick={goPrev}>
+                ← Back
+              </button>
+            ) : <div />}
+          </div>
+
+          <div className="nav-slot nav-right">
+            {index < last ? (
+              <button type="button" className="hub-back-btn" onClick={goNext}>
+                Next →
+              </button>
+            ) : (
+              <button type="button" className="hub-back-btn" onClick={onClose}>
+                Finish
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

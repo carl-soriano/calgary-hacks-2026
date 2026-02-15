@@ -1,7 +1,6 @@
 import React from "react";
 import "../styles/tutorial-content.css";
 import aiImg from "../assets/tutorial-images/ai.png";
-import forestImg from "../assets/tutorial-images/forest.jpg";
 import handsImg from "../assets/tutorial-images/hands.jpg";
 import aiHandsImg from "../assets/tutorial-images/ai-hands.webp";
 import teensImg from "../assets/tutorial-images/teens.webp";
@@ -108,10 +107,10 @@ export function PanelFive({ onAnswer }: { onAnswer?: (correct: boolean) => void 
     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
       <h2>Try it Yourself!</h2>
       <p style={{ marginTop: "0px" }}>Select the image that is <strong>AI-generated</strong>.</p>
-      
+
       <div className="panel-row-compare">
         <div className="panel-image-wrapper">
-         <img
+          <img
             className="panel2-image"
             src={teensImg}
             alt="Image of teens"
