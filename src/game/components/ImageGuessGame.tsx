@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
-import { getLevelImages, LEVELS } from '../../constants/gameImages'
+import { getLevelImages } from '../../constants/gameImages'
 import { getLevelConfig, type DifficultyLevel } from '../../constants/levelConfig'
 import { saveGameResult } from '../../utils/gameStorage'
 import type { GameImage } from '../../types/game'
@@ -21,7 +21,7 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
   const config = useMemo(() => getLevelConfig(difficulty), [difficulty])
   const { imageCount: levelCount, viewSeconds } = config
 
-  const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages())
+  const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages(levelCount))
   const [levelIndex, setLevelIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [levelResults, setLevelResults] = useState<boolean[]>([])
@@ -68,10 +68,10 @@ export default function ImageGuessGame({ mode = 'default', difficulty = 1, onBac
 
   // Auto-record perfect score when the score screen shows
   useEffect(() => {
-    if (phase === 'score' && score === LEVELS && onPerfectScore) {
+    if (phase === 'score' && score === levelCount && onPerfectScore) {
       onPerfectScore()
     }
-  }, [phase, score, onPerfectScore])
+  }, [phase, score, levelCount, onPerfectScore])
 
   const dismissHint = useCallback(() => {
     setShowHint(false)
