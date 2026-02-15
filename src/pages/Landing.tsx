@@ -9,11 +9,12 @@ export type GameMode = 'default' | 'easy'
 
 interface LandingProps {
   onStart: (mode: GameMode, difficulty: DifficultyLevel) => void
+  onGoToNewsFeed?: () => void
 }
 
 const TITLE_LETTERS = ['R', 'E', 'A', 'L', ' ', 'O', 'R', ' ', 'A', 'I', '?']
 
-export default function Landing({ onStart }: LandingProps) {
+export default function Landing({ onStart, onGoToNewsFeed }: LandingProps) {
   const [showTutorial, setShowTutorial] = useState(false)
   const [difficulty, setDifficulty] = useState<DifficultyLevel>(1)
   const [storedData, setStoredData] = useState<ReturnType<typeof getStoredGameData> | null>(null)
@@ -93,6 +94,15 @@ export default function Landing({ onStart }: LandingProps) {
         >
           Tutorial: How to Identify AI Images
         </button>
+        {onGoToNewsFeed && (
+          <button
+            type="button"
+            className="landing-cta landing-cta--tertiary"
+            onClick={onGoToNewsFeed}
+          >
+            AI Learning Hub
+          </button>
+        )}
       </div>
     </div>
   )
