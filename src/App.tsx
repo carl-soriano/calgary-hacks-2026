@@ -3,18 +3,29 @@ import Landing from './pages/Landing'
 import type { GameMode } from './pages/Landing'
 import ImageGuessGame from './game/components/ImageGuessGame'
 import ThemeToggle from './components/ThemeToggle'
+import NewsFeed from './components/NewsFeed'
+
+type Page = 'landing' | 'game' | 'newsfeed'
 
 function App() {
-  const [started, setStarted] = useState(false)
+  const [page, setPage] = useState<Page>('landing')
   const [mode, setMode] = useState<GameMode>('default')
 
   return (
     <main>
       <ThemeToggle />
-      {started ? (
-        <ImageGuessGame mode={mode} onBackToHome={() => setStarted(false)} />
-      ) : (
-        <Landing onStart={(m) => { setMode(m); setStarted(true) }} />
+      {page === 'game' && (
+        <ImageGuessGame
+          mode={mode}
+          onBackToHome={() => setPage('landing')}
+          onGoToNewsFeed={() => setPage('newsfeed')}
+        />
+      )}
+      {page === 'newsfeed' && (
+        <NewsFeed onBackToHome={() => setPage('landing')} />
+      )}
+      {page === 'landing' && (
+        <Landing onStart={(m) => { setMode(m); setPage('game') }} />
       )}
     </main>
   )

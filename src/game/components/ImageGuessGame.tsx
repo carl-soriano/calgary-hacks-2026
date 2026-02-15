@@ -12,9 +12,10 @@ type Phase = 'playing' | 'score'
 interface ImageGuessGameProps {
   mode?: GameMode
   onBackToHome?: () => void
+  onGoToNewsFeed?: () => void
 }
 
-export default function ImageGuessGame({ mode = 'default', onBackToHome }: ImageGuessGameProps) {
+export default function ImageGuessGame({ mode = 'default', onBackToHome, onGoToNewsFeed }: ImageGuessGameProps) {
   const [levelImages, setLevelImages] = useState<GameImage[]>(() => getLevelImages())
   const [levelIndex, setLevelIndex] = useState(0)
   const [score, setScore] = useState(0)
@@ -130,6 +131,11 @@ export default function ImageGuessGame({ mode = 'default', onBackToHome }: Image
           {onBackToHome && (
             <button type="button" className="game-btn game-btn-home" onClick={onBackToHome}>
               Back to home
+            </button>
+          )}
+          {onGoToNewsFeed && (
+            <button type="button" className="game-btn game-btn-learn" onClick={onGoToNewsFeed}>
+              Learn more about AI
             </button>
           )}
         </div>
