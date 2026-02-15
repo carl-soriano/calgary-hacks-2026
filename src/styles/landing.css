@@ -82,6 +82,13 @@
   margin-right: 0.25rem;
 }
 
+.landing-levels-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
 .landing-level-btn {
   display: flex;
   flex-direction: column;
@@ -208,6 +215,25 @@
   .landing-tagline {
     font-size: 1.0625rem;
     margin-bottom: 2rem;
+  }
+
+  .landing-levels {
+    flex-direction: column;
+  }
+
+  .landing-levels-label {
+    margin-right: 0;
+  }
+
+  .landing-levels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .landing-level-btn {
+    padding: 0.7rem 0.5rem;
   }
 
   .landing-cta {
