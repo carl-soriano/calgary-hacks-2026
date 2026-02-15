@@ -30,7 +30,7 @@ export function PanelOne() {
 export function PanelTwo() {
   return (
     <div>
-      <h2>Questions to ask yourself when looking at images</h2>
+      <h2>Questions to Ask Yourself</h2>
       <div className="tutorial-p-text">
         <p>- What do you see in this picture?</p>
         <p>- Does it make sense?</p>
@@ -154,9 +154,9 @@ export function PanelSix({ lastAnswer }: { lastAnswer?: boolean | null }) {
         {lastAnswer === null || typeof lastAnswer === 'undefined' ? (
           <p className="tutorial-p-text"></p>
         ) : lastAnswer ? (
-          <p className="tutorial-p-text" style={{ color: 'green', fontWeight: 600 }}>Correct — this image is AI-generated.</p>
+          <p style={{ color: 'green', fontWeight: 600 }}>Correct — this image is AI-generated.</p>
         ) : (
-          <p className="tutorial-p-text" style={{ color: 'crimson', fontWeight: 600 }}>Incorrect — this is the image that was AI-generated.</p>
+          <p style={{ color: 'crimson', fontWeight: 600 }}>Incorrect — this is the image that was AI-generated.</p>
         )}
 
         <p>If you look closely at the image, you'll notice that the hands are not quite right — they have an unnatural number of fingers.</p>
