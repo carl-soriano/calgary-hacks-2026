@@ -272,6 +272,15 @@
   color: var(--text-primary);
 }
 
+.game-btn-learn {
+  background: var(--accent);
+  color: #fff;
+}
+
+.game-btn-learn:hover {
+  opacity: 0.85;
+}
+
 /* Results breakdown: which images were right/wrong */
 .game-results-list {
   list-style: none;
