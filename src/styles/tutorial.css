@@ -19,18 +19,38 @@
   align-items: center;
 }
 
+/* color variables for tutorial (light defaults) */
+.landing.tutorial {
+  --bg-orange: #F4D6CC;
+  --text: #3b2b28;
+  --muted: rgba(0,0,0,0.6);
+  --card-shadow: 0 4px 12px rgba(252, 217, 186, 0.4);
+  --card-elev-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
 .landing.tutorial .landing-content {
   display: flex;
   flex-direction: column;
   width: 80%;
   height: 70vh;
-  background-color: bisque;
+  background-color: var(--bg-orange);
   margin: 0.75rem 0.5rem;
   margin-top: 1rem;
   border-radius: 10px;
   padding: 10px 20px;
-  box-shadow: 0 4px 12px rgba(252, 217, 186, 0.4);
+  box-shadow: var(--card-shadow);
   overflow: hidden;
+  color: var(--text);
+}
+
+/* respect global theme attribute set by ThemeContext */
+html[data-theme="dark"] .landing.tutorial {
+  --bg-orange: #202428;
+  --card-bg: rgba(20,20,20,0.95);
+  --text: #e7e7e7;
+  --muted: rgba(255,255,255,0.7);
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  --card-elev-shadow: 0 6px 18px rgba(0,0,0,0.5);
 }
 
 /* content area should allow children to grow/shrink properly */
@@ -72,7 +92,7 @@
 
 .tutorial-progress {
   font-size: 0.9rem;
-  color: rgba(0,0,0,0.6);
+  color: var(--muted);
 }
 
 .tutorial-image {
